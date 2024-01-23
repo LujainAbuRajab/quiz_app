@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app2/models/question_with_answer.dart';
+import 'package:quiz_app2/utils/app_colors.dart';
+import 'package:quiz_app2/widgets/answer_widget_iter.dart';
+import 'package:quiz_app2/widgets/congtats_widgets.dart';
+import 'package:quiz_app2/widgets/main_button.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -12,6 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int questionIndex = 0; 
   bool isFinished = false;
   int score = 0;
+  String? selectedAnswer;
 
   void answerQuestion(){
     debugPrint('Answer Chosen');
@@ -20,87 +25,76 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    List<QuestionWithAnswer> questionsWithAnswers = [
-      QuestionWithAnswer(
-        question: 'What is your favorite color?',
-        answers: ['Red','Blue','Green'],
-        correctAnswer: 'Blue',
-      ),
-
-      QuestionWithAnswer(
-        question: 'In what city were you born?', 
-        answers: ['New York','Hebron','Tokyo'], 
-        correctAnswer: 'Hebron',
-      ),
-    ];
-
     return  Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            children: [
-              if(!isFinished) ...[
-                Padding(
-                    padding: const EdgeInsets.only(bottom:15),
-                    child: Text(
-                      questionsWithAnswers[questionIndex].question,
-                      style: const TextStyle(fontSize: 32),
-                    ),
-                ),
-                Column(
-                  children: questionsWithAnswers[questionIndex].answers.map((answer) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: answerButton(
-                      text: answer, 
-                      onPressed: () {
-                        setState(() {
-                          if(answer == questionsWithAnswers[questionIndex].correctAnswer)
-                              score++;
-                          if(questionIndex < questionsWithAnswers.length - 1){   
-                            questionIndex++;
-                            debugPrint("${questionIndex}");
-                          }
-                          else{
-                            isFinished=true;
-                          }
-                      });
-                    },),
-                  ),).toList(),
-                ),
-                ], 
-                if(isFinished) ...[
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: !isFinished ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                
+                  Padding(
+                      padding: const EdgeInsets.only(bottom:5),
+                      child: Text(
+                        questionsWithAnswers[questionIndex].question,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                  ),
                   const Text(
-                    "You have completed the quiz.",
+                    "Answer and get points...",
                     style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    )
-                  ),
-                  const SizedBox(height: 20,),
-                  Text(
-                    'Your Score: ${score}/${questionsWithAnswers.length}',
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                      color: AppColors.babyBlue,
+                      fontSize: 10,
                     ),
                   ),
-                ],
-              ],
+                  const SizedBox(height: 40,),
+                  Column(
+                        children: questionsWithAnswers[questionIndex]
+                            .answers
+                            .map((answer) => AnswerWidgetItem(
+                                  answer: answer,
+                                  selectedAnswer: selectedAnswer,
+                                  onTap: () {
+                                    setState(() {
+                                      selectedAnswer = answer.text;
+                                    });
+                                  },
+                                ))
+                            .toList(),
+                      ),
+                  
+                  const Spacer(),
+                  MainButton(
+                    text: "next", 
+                    onTap: () {
+                         setState(() {
+                            if(selectedAnswer == questionsWithAnswers[questionIndex].correctAnswer)
+                                score++;
+                            if(questionIndex < questionsWithAnswers.length - 1){   
+                              questionIndex++;
+                              debugPrint("${questionIndex}");
+                            }
+                            else{
+                              isFinished=true;
+                            }
+                        });
+                      },
+                  ),
+               ],
+              ) : CongratsWidgets(
+                    score: score,
+                    onTap: () {
+                      setState(() {
+                        questionIndex = 0;
+                        isFinished = false;
+                        score = 0;
+                      });
+                    }, 
+                  ),
             ),
           ),
-        ),
+      ),
       ); 
   }
-
-  Widget answerButton({required String text, required VoidCallback onPressed}){
-      return SizedBox(
-        width: double.infinity,
-        height: 50,
-        child: ElevatedButton(
-          onPressed: onPressed,
-          child: Text(text),
-      ));
-    }
 }

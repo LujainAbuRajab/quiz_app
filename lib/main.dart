@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.lightGreenAccent,
-          foregroundColor: Colors.white30,
-        ),
+        // appBarTheme: const AppBarTheme(
+        //   backgroundColor: Colors.lightGreenAccent,
+        //   foregroundColor: Colors.white30,
+        // ),
         useMaterial3: true,
       ),
     );
