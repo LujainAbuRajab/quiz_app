@@ -20,7 +20,7 @@ class MainButton extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: onTap,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.darkBlue,
+                        backgroundColor: AppColors.darkBlue.withOpacity(0.6),
                         foregroundColor: AppColors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(6),
@@ -28,7 +28,7 @@ class MainButton extends StatelessWidget {
                       ), 
                       child: Text(
                         text,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 22,
                         ),
                       ),

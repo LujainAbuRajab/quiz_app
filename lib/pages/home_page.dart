@@ -5,6 +5,7 @@ import 'package:quiz_app2/widgets/answer_widget_iter.dart';
 import 'package:quiz_app2/widgets/congtats_widgets.dart';
 import 'package:quiz_app2/widgets/main_button.dart';
 
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -16,6 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int questionIndex = 0; 
   bool isFinished = false;
   int score = 0;
+  // var numOfQ = score + 1 ;
   String? selectedAnswer;
 
   void answerQuestion(){
@@ -35,20 +37,43 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 
                   Padding(
-                      padding: const EdgeInsets.only(bottom:5),
+                      padding: const EdgeInsets.only(bottom:1),
                       child: Text(
                         questionsWithAnswers[questionIndex].question,
-                        style: const TextStyle(fontSize: 20),
+                        style:  const TextStyle(fontSize: 20),
+                                
                       ),
                   ),
-                  const Text(
-                    "Answer and get points...",
-                    style: TextStyle(
-                      color: AppColors.babyBlue,
-                      fontSize: 10,
+                  const Padding(
+                    padding: EdgeInsets.only(left: 3),
+                    child: Text(
+                      "Answer Carefully..",
+                      style: TextStyle(
+                        color: AppColors.lightGray,
+                        fontWeight: FontWeight.w100,                      
+                        fontSize: 12,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 40,),
+                  const SizedBox(height: 25,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:[ 
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Question ${score+1} of ${questionsWithAnswers.length}',
+                          style: const TextStyle(
+                            color: AppColors.babyBlue,
+                          ),
+                        ),
+                      ),
+                      const Divider(
+                        color: AppColors.babyBlue,
+                        thickness: 0.3,
+                      ),
+                    ],
+                  ),
                   Column(
                         children: questionsWithAnswers[questionIndex]
                             .answers
@@ -69,11 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     text: "next", 
                     onTap: () {
                          setState(() {
-                            if(selectedAnswer == questionsWithAnswers[questionIndex].correctAnswer)
-                                score++;
+                            if(selectedAnswer == questionsWithAnswers[questionIndex].correctAnswer) {
+                              score++;
+                            }
                             if(questionIndex < questionsWithAnswers.length - 1){   
                               questionIndex++;
-                              debugPrint("${questionIndex}");
+                              debugPrint("$questionIndex");
                             }
                             else{
                               isFinished=true;
@@ -97,4 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       ); 
   }
+
+  
 }
