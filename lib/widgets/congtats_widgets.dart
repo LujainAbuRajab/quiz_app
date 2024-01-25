@@ -10,8 +10,8 @@ class CongratsWidgets extends StatelessWidget {
 @override
   Widget build(BuildContext context) {
     return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [                  
                   Container(
                     width: 400,
@@ -33,42 +33,42 @@ class CongratsWidgets extends StatelessWidget {
                             color: AppColors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w800,
-                          )
-                                               ),
+                          )                     ),
                        ),
-                  
-                    const SizedBox(height:15,),
-                    Text(
-                      'Your Score: $score/${questionsWithAnswers.length}',
-                      style: const TextStyle(
-                        color: AppColors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 80,),
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.resolveWith((states) => (AppColors.white)),
-                      ),
-                      onPressed: onTap,
-                      child: Text(
-                        '      reset Quiz     ',
-                        style: TextStyle(
-                          height: 3,
-                          
-                          color: AppColors.avgBlue,
+                      const SizedBox(height:15,),
+                      Text(
+                        'Your Score: $score/${questionsWithAnswers.length}',
+                        style: const TextStyle(
+                          color: AppColors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ),),
+                      ),
+                      const SizedBox(height: 70,),
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith((states) => (AppColors.white)),
+                        ),
+                        onPressed: onTap,
+                        child: const Text(
+                          '      reset Quiz     ',
+                          style: TextStyle(
+                            height: 3,
+                            color: AppColors.avgBlue,
+                          ),
+                        ),),
                       ],
                     ),
-                    
+                  ),
+                  const SizedBox(height: 15,),
+                  const Divider(
+                    color: AppColors.babyBlue,
+                    thickness: 0.3,
                   ),
                 ],
               );
   }
 } 
-
 
 
 //   @override

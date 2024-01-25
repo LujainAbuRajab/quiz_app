@@ -94,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     text: "next", 
                     onTap: () {
                          setState(() {
+                          if (selectedAnswer != null){
                             if(selectedAnswer == questionsWithAnswers[questionIndex].correctAnswer) {
                               score++;
                             }
@@ -104,6 +105,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             else{
                               isFinished=true;
                             }
+                          }
+                          //TODO: this Massaer doesn't  work well!! WHY?!
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Please select an answer')));
+                            
+                          }
+                            
                         });
                       },
                   ),
