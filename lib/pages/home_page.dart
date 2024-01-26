@@ -5,7 +5,6 @@ import 'package:quiz_app2/widgets/answer_widget_iter.dart';
 import 'package:quiz_app2/widgets/congtats_widgets.dart';
 import 'package:quiz_app2/widgets/main_button.dart';
 
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -14,67 +13,67 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int questionIndex = 0; 
+  int questionIndex = 0;
   bool isFinished = false;
+
+  bool showMore = false;
   int score = 0;
   // var numOfQ = score + 1 ;
   String? selectedAnswer;
 
-  void answerQuestion(){
+  void answerQuestion() {
     debugPrint('Answer Chosen');
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return  Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
-            child: !isFinished ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                
-                  Padding(
-                      padding: const EdgeInsets.only(bottom:1),
-                      child: Text(
-                        questionsWithAnswers[questionIndex].question,
-                        style:  const TextStyle(fontSize: 20),
-                                
-                      ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 3),
-                    child: Text(
-                      "Answer Carefully..",
-                      style: TextStyle(
-                        color: AppColors.lightGray,
-                        fontWeight: FontWeight.w100,                      
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 25,),
-                  Column(
+            child: !isFinished
+                ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children:[ 
+                    children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(bottom: 1),
                         child: Text(
-                          'Question ${score+1} of ${questionsWithAnswers.length}',
-                          style: const TextStyle(
-                            color: AppColors.babyBlue,
+                          questionsWithAnswers[questionIndex].question,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 3),
+                        child: Text(
+                          "Answer Carefully..",
+                          style: TextStyle(
+                            color: AppColors.lightGray,
+                            fontWeight: FontWeight.w100,
+                            fontSize: 12,
                           ),
                         ),
                       ),
-                      const Divider(
-                        color: AppColors.babyBlue,
-                        thickness: 0.3,
+                      const SizedBox(height: 25),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              'Question ${score + 1} of ${questionsWithAnswers.length}',
+                              style: const TextStyle(
+                                color: AppColors.babyBlue,
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            color: AppColors.babyBlue,
+                            thickness: 0.3,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  Column(
+                      Column(
                         children: questionsWithAnswers[questionIndex]
                             .answers
                             .map((answer) => AnswerWidgetItem(
@@ -88,36 +87,39 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ))
                             .toList(),
                       ),
-                  
-                  const Spacer(),
-                  MainButton(
-                    text: "next", 
-                    onTap: () {
-                         setState(() {
-                          if (selectedAnswer != null){
-                            if(selectedAnswer == questionsWithAnswers[questionIndex].correctAnswer) {
-                              score++;
+                      const Spacer(),
+                      MainButton(
+                        text: "next",
+                        onTap: () {
+                          setState(() {
+                            if (selectedAnswer != null) {
+                              if (selectedAnswer ==
+                                  questionsWithAnswers[questionIndex]
+                                      .correctAnswer) {
+                                score++;
+                              }
+                              if (questionIndex <
+                                  questionsWithAnswers.length - 1) {
+                                questionIndex++;
+                                debugPrint("$questionIndex");
+                              } else {
+                                isFinished = true;
+                              }
+                              selectedAnswer = null;
                             }
-                            if(questionIndex < questionsWithAnswers.length - 1){   
-                              questionIndex++;
-                              debugPrint("$questionIndex");
+                            else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Please select an answer'),
+                                ),
+                              );
                             }
-                            else{
-                              isFinished=true;
-                            }
-                          }
-                          //TODO: this Massaer doesn't  work well!! WHY?!
-                          else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Please select an answer')));
-                            
-                          }
-                            
-                        });
-                      },
-                  ),
-               ],
-              ) : CongratsWidgets(
+                          });
+                        },
+                      ),
+                    ],
+                  )
+                : CongratsWidgets(
                     score: score,
                     onTap: () {
                       setState(() {
@@ -125,13 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         isFinished = false;
                         score = 0;
                       });
-                    }, 
+                    },
                   ),
-            ),
           ),
+        ),
       ),
-      ); 
+    );
   }
-
-  
 }

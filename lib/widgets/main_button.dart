@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
 import 'package:quiz_app2/utils/app_colors.dart';
 
 class MainButton extends StatelessWidget {
@@ -15,24 +14,22 @@ class MainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-                    width: double.infinity,
-                    height: 40,
-                    child: ElevatedButton(
-                      onPressed: onTap,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.darkBlue.withOpacity(0.6),
-                        foregroundColor: AppColors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ), 
-                      child: Text(
-                        text,
-                        style: const TextStyle(
-                          fontSize: 22,
-                        ),
-                      ),
-                    ),
-                  );
+      width: double.infinity,
+      height: 40,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.darkBlue.withOpacity(0.6),
+          foregroundColor: AppColors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
+          ),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 22),
+        ),
+      ),
+    );
   }
 }
